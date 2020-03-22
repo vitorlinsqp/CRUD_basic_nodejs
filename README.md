@@ -1,2 +1,26 @@
-# CRUD_basic_nodejs and mongodb
-Basic CRUD without validation in NodeJs connecting to mongodb and testing data connection with Insomnia
+Run the project downloaded
+
+Install dependencies
+### 'npm install'
+
+Run the Project
+### 'npm run dev'
+
+--------------------------
+Create the Project
+
+Install React and Next
+### 'npm install --save next react react-dom'
+
+Open package .json a add the follow scripts:
+"scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  }
+
+  Run the Project
+  ### 'npm run dev'
+
+  Connect with a API
+  ### 'npm install --save axios'
