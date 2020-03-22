@@ -1,11 +1,26 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 require("./models/Users");
 const Users = mongoose.model("users");
 
+// require("./models/Contacts");
+// const Contacts = mongoose.model("contacts");
+
+require("./models/About");
+const About = mongoose.model("about");
+
 const app = express();
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  app.use(cors());
+  next();
+});
+
 
 mongoose.connect("mongodb://localhost/celke", {
   useNewUrlParser: true,
@@ -16,6 +31,7 @@ mongoose.connect("mongodb://localhost/celke", {
   console.log("Error: MongoDB not connected" + err);
 });
 
+//CRUD USERS
 app.get("/users", (req, res) => {
   Users.find({
 
@@ -77,7 +93,33 @@ app.delete("/users/:id", (req, res) => {
       message: "User deleted"
     })
   })
+});
+
+//CRUD of the page ABOUT
+app.get("/about", (req, res) => {
+  About.findOne({}).then((about) => {
+    return res.json(about);
+  }).catch((err) => {
+    return res.status(400).json({
+      error: true,
+      message: "There's no register founded"
+    })
+  })
 })
+
+app.post("/about", (req, res) => {
+  About.create(req.body, err => {
+    if (err)
+      return res.status(400).json({
+        error: true,
+        message: "Error: Failure to add content"
+      });
+    return res.json({
+      error: false,
+      message: "Content of the page About successfully added"
+    });
+  });
+});
 
 app.listen(8080, () => {
   console.log("Server executed at: Door 8080 -> http://localhost:8080");
